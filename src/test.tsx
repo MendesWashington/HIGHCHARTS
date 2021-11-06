@@ -3,14 +3,6 @@ import * as ReactDom from "react-dom";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import api from "../src/services/api";
-// The wrapper exports only a default component that at the same time is a
-// namespace for the related Props interface (HighchartsReact.Props) and
-// RefObject interface (HighchartsReact.RefObject). All other interfaces
-// like Options come from the Highcharts module itself.
-
-// React supports function components as a simple way to write components that
-// only contain a render method without any state (the App component in this
-// example).
 
 interface IPropsChartHistory {
   nome_ambiente: string;
@@ -24,16 +16,29 @@ interface IPropsChartHistory {
   serie_C: number[];
   datas: string[];
 }
-
 export const App = (props: HighchartsReact.Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
-  const [dataHistory, setDataHistory] = useState({} as IPropsChartHistory);
+  const [nome_ambiente, setNomeAmbiente] = useState("");
+  const [descricao_medicao, setDescricaoMedicao] = useState("");
+  const [periodoInicio, setPeriodoInicio] = useState("");
+  const [periodoFim, setPeriodoFim] = useState("");
+  const [presetMax, setPresetMax] = useState(0);
+  const [presetMin, setPresetMin] = useState(0);
+  const [serie_A, setSerie_A] = useState<number[]>([]);
+  const [serie_B, setSerie_B] = useState<number[]>([]);
+  const [serie_C, setSerie_C] = useState<number[]>([]);
+  const [datas, setDatas] = useState<string[]>([]);
+
   useEffect(() => {
     api
-      .post(`/dataHistory/5/229`)
+      .post<IPropsChartHistory>(`/dataHistory/5/229`)
       .then((response) => {
-        setDataHistory(response.data);
-        console.log(response.data.dataHistory.serie_A);
+        const { data } = response;
+        if (response.status === 200) {
+          console.log(data);
+          setNomeAmbiente(data.nome_ambiente);
+          setSerie_A(data.serie_A);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -42,9 +47,9 @@ export const App = (props: HighchartsReact.Props) => {
 
   const options: Highcharts.Options = {
     title: {
-      text: "My chart",
+      text: nome_ambiente,
     },
-    series: [{ type: "area", data: dataHistory?.serie_A }],
+    series: [{ type: "line", data: serie_A }],
   };
 
   return (
