@@ -33,34 +33,17 @@ export const App = (props: HighchartsReact.Props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function DataApi() {
-      try {
-        const { data, status } = await api.post<DataHistory>(
-          `/dataHistory/5/229`,
-          {}
-        );
-        if (status === 200) {
-          setDataApi(data);
-          console.log(data);
-          setLoading(true);
-        }
-      } catch (error) {
-        throw new Error("Erro na busca de dados");
-      }
-    }
-
-    DataApi();
-    /*  api
+    api
       .post<DataHistory>(`/dataHistory/5/229`)
       .then((response) => {
-        setDataHistory(response.data);
+        setDataApi(response.data);
         console.log(response.data);
-        console.log(response.data.serie_A);
+
         setLoading(true);
       })
       .catch((error) => {
         console.log(error);
-      }); */
+      });
   }, []);
 
   const options: Highcharts.Options = {
@@ -73,6 +56,25 @@ export const App = (props: HighchartsReact.Props) => {
         data: dataApi.dataHistory?.serie_A,
       },
     ],
+    xAxis: {
+      categories: dataApi.dataHistory?.datas,
+      dateTimeLabelFormats: {},
+      
+    },
+    yAxis:{
+      plotLines: [
+        {
+          color: "#FF0000",
+          width: 2,
+          value: 22.5,
+        },
+        {
+          color: "#DD1",
+          width: 2,
+          value: 15.5,
+        },
+      ],
+    }
   };
   return loading ? (
     <>
