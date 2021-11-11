@@ -1,15 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as Highcharts from "highcharts";
+import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import api from "../src/services/api";
-// The wrapper exports only a default component that at the same time is a
-// namespace for the related Props interface (HighchartsReact.Props) and
-// RefObject interface (HighchartsReact.RefObject). All other interfaces
-// like Options come from the Highcharts module itself.
-
-// React supports function components as a simple way to write components that
-// only contain a render method without any state (the App component in this
-// example).
 
 interface DataHistory {
   dataHistory: {
@@ -19,10 +11,11 @@ interface DataHistory {
     periodoInicio: string;
     presetMax: number;
     presetMin: number;
-    serie_A: number[];
+    serie: [number[]];
+    /* serie_A: number[];
     serie_B: number[];
     serie_C: number[];
-    datas: string[];
+    datas: string[]; */
     datasEpoch: string[];
   };
 }
@@ -50,36 +43,79 @@ export const App = (props: HighchartsReact.Props) => {
     title: {
       text: dataApi.dataHistory?.nome_ambiente,
     },
-    series: [
-      {
-        type: "line",
-        data: dataApi.dataHistory?.serie_A,
-      },
-    ],
-    xAxis: {
-      categories: dataApi.dataHistory?.datas,
-      dateTimeLabelFormats: {},
-      
+    subtitle: {
+      text: dataApi.dataHistory?.descricao_medicao,
     },
-    yAxis:{
-      plotLines: [
+    rangeSelector: {
+      buttons: [
         {
-          color: "#FF0000",
-          width: 2,
-          value: 22.5,
+          type: "hour",
+          count: 24,
+          text: "24h",
         },
         {
-          color: "#DD1",
-          width: 2,
-          value: 15.5,
+          type: "day",
+          count: 30,
+          text: "30d",
+        },
+        {
+          type: "day",
+          count: 60,
+          text: "60d",
+        },
+
+        {
+          type: "all",
+          text: "All",
         },
       ],
-    }
+      selected: 3,
+    },
+    series: [
+      {
+        name: "Aferida",
+        type: "line",
+        data: dataApi.dataHistory?.serie,
+        tooltip: {
+          valueDecimals: 1,
+          valueSuffix: "°C",
+        },
+      },
+    ],
+    yAxis: {
+      title: {
+        text: "Temperature (°C)",
+      },
+      max: 20,
+      min: 14,
+
+      plotLines: [
+        {
+          value: 20,
+          color: "red",
+          dashStyle: "ShortDash",
+          width: 2,
+          label: {
+            text: "Máx",
+          },
+        },
+        {
+          value: 14,
+          color: "green",
+          dashStyle: "ShortDash",
+          width: 2,
+          label: {
+            text: "Min",
+          },
+        },
+      ],
+    },
   };
   return loading ? (
     <>
       <HighchartsReact
         highcharts={Highcharts}
+        constructorType={"stockChart"}
         options={options}
         ref={chartComponentRef}
         {...props}
