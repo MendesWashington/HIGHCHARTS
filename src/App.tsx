@@ -12,10 +12,8 @@ interface DataHistory {
     presetMax: number;
     presetMin: number;
     serie: [number[]];
-    /* serie_A: number[];
-    serie_B: number[];
-    serie_C: number[];
-    datas: string[]; */
+    maximoHistorico: number;
+    minimoHistorico: number;
     datasEpoch: string[];
   };
 }
@@ -71,6 +69,9 @@ export const App = (props: HighchartsReact.Props) => {
       ],
       selected: 3,
     },
+    legend: {
+      enabled: true,
+    },
     series: [
       {
         name: "Aferida",
@@ -82,16 +83,20 @@ export const App = (props: HighchartsReact.Props) => {
         },
       },
     ],
+
     yAxis: {
       title: {
-        text: "Temperature (°C)",
+        text: "Temperatura (°C)",
+        align: "low",
+        textAlign: "left",
       },
-      max: 20,
-      min: 14,
+      opposite: false,
+      max: dataApi.dataHistory?.maximoHistorico,
+      min: dataApi.dataHistory?.minimoHistorico,
 
       plotLines: [
         {
-          value: 20,
+          value: dataApi.dataHistory?.presetMax,
           color: "red",
           dashStyle: "ShortDash",
           width: 2,
@@ -100,8 +105,8 @@ export const App = (props: HighchartsReact.Props) => {
           },
         },
         {
-          value: 14,
-          color: "green",
+          value: dataApi.dataHistory?.presetMin,
+          color: "yellow",
           dashStyle: "ShortDash",
           width: 2,
           label: {
