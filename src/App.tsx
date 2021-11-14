@@ -101,7 +101,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-            text: "Máx",
+            text: `máx: ${dataApi.dataHistory?.presetMax}°C`,
           },
         },
         {
@@ -110,7 +110,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-            text: "Min",
+            text: `min: ${dataApi.dataHistory?.presetMin}°C`,
           },
         },
       ],
