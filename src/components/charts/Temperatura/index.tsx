@@ -47,6 +47,11 @@ export const Temperatura = (props: HighchartsReact.Props) => {
     subtitle: {
       text: dataApi.dataHistory?.descricao_medicao,
     },
+    credits: {
+      enabled: true,
+      text: "appsupply",
+      href: "https://painel.appsupply.ml/",
+    },
     rangeSelector: {
       buttons: [
         {

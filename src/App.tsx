@@ -12,17 +12,11 @@ interface DataHistory {
     periodoFim: string;
     presetMax: number;
     presetMin: number;
-<<<<<<< HEAD
     maximoHistorico: number;
     minimoHistorico: number;
     serie_A: number[];
     serie_B: number[];
     serie_C: number[];
-=======
-    serie: [number[]];
-    maximoHistorico: number;
-    minimoHistorico: number;
->>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
     datasEpoch: string[];
   };
 }
@@ -34,7 +28,7 @@ export const App = (props: HighchartsReact.Props) => {
 
   useEffect(() => {
     api
-      .post<DataHistory>(`/dataHistory/5/230`)
+      .post<DataHistory>(`/dataHistory/5/229`)
       .then((response) => {
         setDataApi(response.data);
         console.log(response.data);
@@ -49,6 +43,11 @@ export const App = (props: HighchartsReact.Props) => {
   const options: Highcharts.Options = {
     title: {
       text: dataApi.dataHistory?.nome_ambiente,
+    },
+    credits: {
+      enabled: true,
+      text: "appsupply",
+      href: "https://painel.appsupply.ml/",
     },
     subtitle: {
       text: dataApi.dataHistory?.descricao_medicao,
@@ -78,36 +77,24 @@ export const App = (props: HighchartsReact.Props) => {
       ],
       selected: 3,
     },
-    legend: {
-      enabled: true,
-    },
     series: [
       {
-        name: "Umidade (*)",
-        type: "line",
+        name: "Temperatura (°C)",
+        type: "area",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {
           valueDecimals: 1,
-          valueSuffix: "*",
+          valueSuffix: "°C",
         },
       },
     ],
-<<<<<<< HEAD
     legend: {
       enabled: true,
     },
     yAxis: {
       title: {
-        text: "Umidade (*)",
+        text: "Temperature (°C)",
         align: "low",
-=======
-
-    yAxis: {
-      title: {
-        text: "Temperatura (°C)",
-        align: "low",
-        textAlign: "left",
->>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
       },
       opposite: false,
       max: dataApi.dataHistory?.maximoHistorico,
@@ -120,11 +107,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-<<<<<<< HEAD
-            text: `máx ${dataApi.dataHistory?.presetMax}`,
-=======
-            text: `máx: ${dataApi.dataHistory?.presetMax}°C`,
->>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
+            text: "Máx",
           },
         },
         {
@@ -133,11 +116,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-<<<<<<< HEAD
-            text: `min ${dataApi.dataHistory?.presetMin}`,
-=======
-            text: `min: ${dataApi.dataHistory?.presetMin}°C`,
->>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
+            text: "Min",
           },
         },
       ],

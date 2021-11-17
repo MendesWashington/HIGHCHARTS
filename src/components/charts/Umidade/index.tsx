@@ -17,11 +17,10 @@ interface DataHistory {
     serie_A: number[];
     serie_B: number[];
     serie_C: number[];
-    datasEpoch: string[];
   };
 }
 
-export const Umidade = (props: HighchartsReact.Props) => {
+export const App = (props: HighchartsReact.Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   const [dataApi, setDataApi] = useState<DataHistory>({} as DataHistory);
   const [loading, setLoading] = useState(false);
@@ -46,6 +45,11 @@ export const Umidade = (props: HighchartsReact.Props) => {
     },
     subtitle: {
       text: dataApi.dataHistory?.descricao_medicao,
+    },
+    credits: {
+      enabled: true,
+      text: "appsupply",
+      href: "https://painel.appsupply.ml/",
     },
     rangeSelector: {
       buttons: [
@@ -72,23 +76,23 @@ export const Umidade = (props: HighchartsReact.Props) => {
       ],
       selected: 3,
     },
+    legend: {
+      enabled: true,
+    },
     series: [
       {
-        name: "Umidade (*)",
+        name: "Umidade (%)",
         type: "line",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {
           valueDecimals: 1,
-          valueSuffix: "*",
+          valueSuffix: "%",
         },
       },
     ],
-    legend: {
-      enabled: true,
-    },
     yAxis: {
       title: {
-        text: "Umidade (*)",
+        text: "Umidade (%)",
         align: "low",
       },
       opposite: false,
