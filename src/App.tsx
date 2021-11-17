@@ -80,7 +80,7 @@ export const App = (props: HighchartsReact.Props) => {
     series: [
       {
         name: "Temperatura (°C)",
-        type: "area",
+        type: "line",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {
           valueDecimals: 1,
