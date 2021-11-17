@@ -12,11 +12,17 @@ interface DataHistory {
     periodoFim: string;
     presetMax: number;
     presetMin: number;
+<<<<<<< HEAD
     maximoHistorico: number;
     minimoHistorico: number;
     serie_A: number[];
     serie_B: number[];
     serie_C: number[];
+=======
+    serie: [number[]];
+    maximoHistorico: number;
+    minimoHistorico: number;
+>>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
     datasEpoch: string[];
   };
 }
@@ -72,6 +78,9 @@ export const App = (props: HighchartsReact.Props) => {
       ],
       selected: 3,
     },
+    legend: {
+      enabled: true,
+    },
     series: [
       {
         name: "Umidade (*)",
@@ -83,6 +92,7 @@ export const App = (props: HighchartsReact.Props) => {
         },
       },
     ],
+<<<<<<< HEAD
     legend: {
       enabled: true,
     },
@@ -90,6 +100,14 @@ export const App = (props: HighchartsReact.Props) => {
       title: {
         text: "Umidade (*)",
         align: "low",
+=======
+
+    yAxis: {
+      title: {
+        text: "Temperatura (°C)",
+        align: "low",
+        textAlign: "left",
+>>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
       },
       opposite: false,
       max: dataApi.dataHistory?.maximoHistorico,
@@ -102,7 +120,11 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
+<<<<<<< HEAD
             text: `máx ${dataApi.dataHistory?.presetMax}`,
+=======
+            text: `máx: ${dataApi.dataHistory?.presetMax}°C`,
+>>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
           },
         },
         {
@@ -111,7 +133,11 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
+<<<<<<< HEAD
             text: `min ${dataApi.dataHistory?.presetMin}`,
+=======
+            text: `min: ${dataApi.dataHistory?.presetMin}°C`,
+>>>>>>> 2fb01e84e98fb7c8231b83f7a8a9fbc88f625832
           },
         },
       ],

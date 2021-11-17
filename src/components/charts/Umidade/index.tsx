@@ -74,7 +74,7 @@ export const Umidade = (props: HighchartsReact.Props) => {
     },
     series: [
       {
-        name: "Temperatura (°C)",
+        name: "Umidade (*)",
         type: "line",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {
