@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import api from "./services/api";
+import api from "../../../services/api";
 
 interface DataHistory {
   dataHistory: {
@@ -21,7 +21,7 @@ interface DataHistory {
   };
 }
 
-export const App = (props: HighchartsReact.Props) => {
+export const Umidade = (props: HighchartsReact.Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   const [dataApi, setDataApi] = useState<DataHistory>({} as DataHistory);
   const [loading, setLoading] = useState(false);
@@ -74,7 +74,7 @@ export const App = (props: HighchartsReact.Props) => {
     },
     series: [
       {
-        name: "Umidade (*)",
+        name: "Temperatura (°C)",
         type: "line",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {

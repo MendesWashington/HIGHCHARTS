@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import api from "./services/api";
+import api from "../../../services/api";
 
 interface DataHistory {
   dataHistory: {
@@ -21,14 +21,14 @@ interface DataHistory {
   };
 }
 
-export const App = (props: HighchartsReact.Props) => {
+export const Temperatura = (props: HighchartsReact.Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   const [dataApi, setDataApi] = useState<DataHistory>({} as DataHistory);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     api
-      .post<DataHistory>(`/dataHistory/5/230`)
+      .post<DataHistory>(`/dataHistory/5/229`)
       .then((response) => {
         setDataApi(response.data);
         console.log(response.data);
@@ -74,12 +74,12 @@ export const App = (props: HighchartsReact.Props) => {
     },
     series: [
       {
-        name: "Umidade (*)",
+        name: "Temperatura (°C)",
         type: "line",
         data: dataApi.dataHistory?.serie_A,
         tooltip: {
           valueDecimals: 1,
-          valueSuffix: "*",
+          valueSuffix: "°C",
         },
       },
     ],
@@ -88,7 +88,7 @@ export const App = (props: HighchartsReact.Props) => {
     },
     yAxis: {
       title: {
-        text: "Umidade (*)",
+        text: "Temperature (°C)",
         align: "low",
       },
       opposite: false,
@@ -102,7 +102,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-            text: `máx ${dataApi.dataHistory?.presetMax}`,
+            text: "Máx",
           },
         },
         {
@@ -111,7 +111,7 @@ export const App = (props: HighchartsReact.Props) => {
           dashStyle: "ShortDash",
           width: 2,
           label: {
-            text: `min ${dataApi.dataHistory?.presetMin}`,
+            text: "Min",
           },
         },
       ],
